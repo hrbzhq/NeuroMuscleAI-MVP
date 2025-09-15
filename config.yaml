@@ -1,0 +1,17 @@
+experiment_name: "muscle_atrophy_v1"
+model: "resnet18"
+batch_size: 8
+learning_rate: 0.0001
+epochs: 1
+data_path: "./data"
+log_dir: "./logs"
+pretrained: True
+# 早停设置（若验证指标在此轮数未改进则停止训练）
+early_stopping_patience: 3
+# 是否使用 Weights & Biases（或同类工具），若使用需要在环境中安装并配置登录信息
+use_wandb: False
+# 是否保存验证集上表现最好的模型
+checkpoint_best: True
+# 交叉验证折数（1 表示不使用 k-fold）
+k_folds: 5
+epochs: 3
