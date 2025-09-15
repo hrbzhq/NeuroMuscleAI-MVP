@@ -114,3 +114,30 @@ streamlit run app.py
 欢迎把这个项目 Fork 到 GitHub 并在 Issues 中提交问题或改进建议。我们建议在推送到远端前确认 `.gitignore` 已正确忽略 `models/`, `logs/`, `data/` 等大文件目录。
 
 发布指南：请参考 `RELEASE.md`，其中包含如何打 tag、创建 Release、以及如何安全地处理模型权重和大文件的建议。
+
+提交成果与展示
+----------------
+项目现在包含一个简单的提交入口与展示工作流：
+
+- 提交工具（本地/网页）：`tools/submit_results.py` 是一个轻量的 Streamlit 应用，贡献者可以上传 `predictions.csv` 和 `metrics.json`，这些内容会保存到仓库的 `submissions/` 目录。
+- 自动展示：仓库包含一个 GitHub Actions 工作流 `publish_results.yml`，当 `master/main` 有推送时会把 `submissions/` 目录的内容发布到 GitHub Pages（`gh-pages`），从而在仓库的 Pages 页面上展示提交成果。
+
+如何使用提交工具（本地运行）：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+streamlit run tools/submit_results.py
+```
+
+维护者提示：请在合并或审核提交后检查 `submissions/` 目录并决定是否把条目加入 README/leaderboard 或发布为 Release 附件。
+
+贡献类型说明
+- `software`: 代码、工具、脚本或软件工程相关贡献（例如改进训练脚本、模型定义）。
+- `medical`: 与医学专业相关的贡献（例如影像标注、临床解释、病例讨论）。
+- `dataset`: 新的数据集或数据增强脚本。
+- `model`: 训练好的模型权重或模型构建说明。
+- `other`: 其他类型的贡献。
+
+维护者可以在审核 `submissions/` 时按 `contribution_type` 字段来分类并将结果整理到项目文档或 leaderboard 页面。
