@@ -3,3 +3,7 @@ __pycache__/
 logs/
 models/
 *.pyc
+    
+# Ignore repository backups and local datasets
+.git_backup_*/
+data/
