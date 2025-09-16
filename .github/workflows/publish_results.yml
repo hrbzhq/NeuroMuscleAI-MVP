@@ -1,0 +1,26 @@
+name: Publish submissions to gh-pages
+
+on:
+  push:
+    branches: [ master, main ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup pages
+        uses: actions/configure-pages@v3
+      - name: Build site
+        run: |
+          mkdir output || true
+          cp -R submissions output || true
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: output
+      - name: Publish
+        uses: actions/deploy-pages@v2

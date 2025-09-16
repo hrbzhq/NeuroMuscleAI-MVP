@@ -1,19 +1,21 @@
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import torchvision.transforms as transforms
 from PIL import Image
-import numpy as np
-import matplotlib.pyplot as plt
-import cv2
 
 # 简单的图像预处理函数
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-])
+transform = transforms.Compose(
+    [
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+    ]
+)
 
 
 def load_image(path):
-    img = Image.open(path).convert('RGB')
+    img = Image.open(path).convert("RGB")
     return transform(img).unsqueeze(0)
 
 
@@ -39,7 +41,7 @@ def grad_cam(model, input_tensor, class_idx=None):
     # 尝试定位最后的 conv 层
     target_conv = _find_last_conv_module(model)
     if target_conv is None:
-        raise RuntimeError('No Conv2d layer found in model for Grad-CAM')
+        raise RuntimeError("No Conv2d layer found in model for Grad-CAM")
 
     def forward_hook(module, inp, out):
         nonlocal activations
@@ -68,7 +70,7 @@ def grad_cam(model, input_tensor, class_idx=None):
     bh.remove()
 
     if activations is None or gradients is None:
-        raise RuntimeError('Failed to obtain activations or gradients for Grad-CAM')
+        raise RuntimeError("Failed to obtain activations or gradients for Grad-CAM")
 
     # 计算 channel-wise 权重：对梯度做全局平均池化
     weights = gradients.mean(dim=(2, 3), keepdim=True)  # shape (N, C, 1, 1)
@@ -88,7 +90,7 @@ def grad_cam(model, input_tensor, class_idx=None):
 
 def overlay_heatmap(pil_image, heatmap, alpha=0.45, colormap=cv2.COLORMAP_JET):
     """将 heatmap (H,W, 值0-1) 叠加到 PIL 图像上并返回 PIL 图像"""
-    img = np.array(pil_image.convert('RGB'))
+    img = np.array(pil_image.convert("RGB"))
     h, w = heatmap.shape
     heatmap_uint8 = np.uint8(255 * heatmap)
     heatmap_color = cv2.applyColorMap(heatmap_uint8, colormap)
@@ -100,6 +102,6 @@ def overlay_heatmap(pil_image, heatmap, alpha=0.45, colormap=cv2.COLORMAP_JET):
 
 
 def save_heatmap(heatmap, save_path):
-    plt.imshow(heatmap, cmap='jet')
-    plt.axis('off')
-    plt.savefig(save_path, bbox_inches='tight', pad_inches=0)
+    plt.imshow(heatmap, cmap="jet")
+    plt.axis("off")
+    plt.savefig(save_path, bbox_inches="tight", pad_inches=0)
