@@ -20,6 +20,37 @@ python demo_run.py --input examples/sample.jpg --output out.png
 streamlit run app.py
 ```
 
+### 安装（示例）
+
+在 Windows PowerShell 中：
+
+```powershell
+git clone https://github.com/hrbzhq/NeuroMuscleAI-MVP.git
+cd NeuroMuscleAI-MVP
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+如果你使用 Linux / macOS，请使用对应的虚拟环境激活命令。
+
+### 配置
+
+- 若存在 `config.yaml`，在运行训练或演示前调整学习率、批次大小等。示例字段：`learning_rate`, `batch_size`, `num_epochs`。
+- 多语言：`i18n.py` 控制演示的语言包，Streamlit 页面会根据所选语言加载对应文本。
+
+### 运行训练与评估（示例）
+
+```powershell
+python train.py --config config.yaml
+python demo_run.py --input examples/sample.jpg --output gradcam.png
+```
+
+### 注意事项
+
+- 若仓库无法直接推送到 GitHub（网络受限），请使用 `tools/network_fallback/` 中的 `repo.bundle` 或 `patches` 导出工具，在可联网机器上导入并推送（详见 `tools/network_fallback/README.md`）。
+- 在执行历史重写并强制推送前，请备份并通知所有协作者。
+
 ## 更新日志（要点）
 
 - 已加入 pre-commit（Black/isort/flake8）和 GitHub Actions CI。
