@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    # Optionally customize ignored updates
+    # ignore:
+    #   - dependency-name: "tensorflow"
+    #     versions: ["< 2.0.0"]
