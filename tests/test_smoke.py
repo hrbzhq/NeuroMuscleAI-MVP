@@ -1,13 +1,15 @@
-import os
 import sys
 from pathlib import Path
-import torch
-from PIL import Image
+
 # ensure project root is importable when running pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+import numpy as np
+import torch
+from PIL import Image
+
 from model import build_model
 from utils import grad_cam, overlay_heatmap
-import numpy as np
 
 
 def test_build_model_forward():
@@ -30,7 +32,7 @@ def test_gradcam_and_overlay(tmp_path):
     assert heatmap.shape == (224, 224)
 
     # overlay_heatmap should accept a PIL image and return a PIL image
-    img = Image.new('RGB', (224, 224), color=(128, 128, 128))
+    img = Image.new("RGB", (224, 224), color=(128, 128, 128))
     overlay = overlay_heatmap(img, heatmap)
     assert overlay.size == img.size
     # Save to tmp to ensure saving works
