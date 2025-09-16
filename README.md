@@ -1,3 +1,118 @@
+<!-- Banner-style README based on provided screenshot -->
+<p align="center">
+  <img src="docs/assets/logo.png" alt="NeuroMuscleAI" width="420" />
+</p>
+
+<p align="center">
+  <a href="#">English</a> • <a href="#">简体中文</a> • <a href="#">繁體中文</a> • <a href="#">日本語</a> • <a href="#">한국어</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/hrbzhq/NeuroMuscleAI-MVP/actions/workflows/ci.yml"><img src="https://github.com/hrbzhq/NeuroMuscleAI-MVP/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/hrbzhq/NeuroMuscleAI-MVP/releases"><img src="https://img.shields.io/github/v/release/hrbzhq/NeuroMuscleAI-MVP" alt="Latest Release" /></a>
+  <a href="https://github.com/hrbzhq/NeuroMuscleAI-MVP/network/dependabot"><img src="https://img.shields.io/badge/dependabot-up--to--date-brightgreen" alt="Dependabot" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" /></a>
+</p>
+
+---
+
+## Document | Roadmap | Twitter | Demo
+
+NeuroMuscleAI-MVP 是一个用于肌电/神经影像小样本训练与可视化的演示级项目：包含训练脚本、Grad-CAM 可视化、Streamlit 演示与多语言支持。
+
+快速开始
+
+- Demo: `demo_run.py` 展示了如何用示例图像运行模型并导出 Grad-CAM。
+- 前端: `app.py` 使用 Streamlit 提供交互式演示。
+- 训练: `train.py` 包含训练循环与保存/加载逻辑。
+
+### Table of Contents
+
+- [What is NeuroMuscleAI-MVP](#what-is-neuromuscleai-mvp)
+- [Demo](#demo)
+- [Latest Updates](#latest-updates)
+- [Key Features](#key-features)
+- [System Architecture](#system-architecture)
+- [Get Started](#get-started)
+- [Configurations](#configurations)
+- [Build & Run](#build--run)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## What is NeuroMuscleAI-MVP
+
+NeuroMuscleAI-MVP 展示了一个小规模的研究原型，用于探索使用 CNN（ResNet-18）在肌电/神经图像数据上的迁移学习、可解释性（Grad-CAM）以及轻量化前端演示。
+
+## Demo
+
+在本仓库中运行演示：
+
+```powershell
+python demo_run.py --input examples/sample.jpg --output out.png
+streamlit run app.py
+```
+
+## Latest Updates
+
+- 已加入 pre-commit（Black/isort/flake8）和 GitHub Actions CI。
+- 添加了 `tools/network_fallback/` 用于在无法直接推送到 GitHub 时导出 `repo.bundle` 和补丁。
+
+## Key Features
+
+- 训练与评估脚本（`train.py`）
+- 轻量模型（ResNet-18）与检查点加载（`model.py`）
+- Grad-CAM 可视化工具（`utils.py`）
+- Streamlit 演示页面（`app.py`）
+- 多语言支持与国际化（`i18n.py`）
+
+## System Architecture
+
+项目使用 PyTorch 作为训练后端，Streamlit 提供前端，CI 使用 GitHub Actions。开发者工具链包括 `pre-commit`, `flake8`, `black`, `isort` 等。
+
+## Get Started
+
+1. 克隆仓库并创建虚拟环境：
+
+```powershell
+git clone https://github.com/hrbzhq/NeuroMuscleAI-MVP.git
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+2. 运行演示：
+
+```powershell
+streamlit run app.py
+```
+
+## Configurations
+
+编辑 `config.yaml`（如果存在）来修改训练参数与演示选项。
+
+## Build & Run
+
+运行测试：
+
+```powershell
+pytest -q
+```
+
+## Contributing
+
+请阅读 `CONTRIBUTING.md` 并在提交 PR 前运行：
+
+```powershell
+pre-commit run --all-files
+```
+
+---
+
+## License
+
+This project is licensed under the Apache-2.0 License - see the `LICENSE` file for details.
 # NeuroMuscleAI-MVP
 
 AI 识别肌肉衰退图像的开源原型 · Beginnings 生态系统
