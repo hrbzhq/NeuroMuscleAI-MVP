@@ -1,6 +1,10 @@
 import os
+import sys
+from pathlib import Path
 import torch
 from PIL import Image
+# ensure project root is importable when running pytest
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from model import build_model
 from utils import grad_cam, overlay_heatmap
 import numpy as np
