@@ -57,6 +57,7 @@ streamlit run app.py
 - 已加入 pre-commit（Black/isort/flake8）和 GitHub Actions CI。
 - 添加了 `tools/network_fallback/` 用于在无法直接推送到 GitHub 时导出 `repo.bundle` 和补丁。
 - 征召海外代理与镜像节点说明（参见 `docs/agents_and_mirrors.md`）。
+- English version available: `docs/agents_and_mirrors_en.md` (volunteer mirror/agent info)
 
 ## Key Features
 
