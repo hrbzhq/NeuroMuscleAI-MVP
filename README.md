@@ -139,6 +139,33 @@ streamlit run tools/submit_results.py
 
 维护者提示：请在合并或审核提交后检查 `submissions/` 目录并决定是否把条目加入 README/leaderboard 或发布为 Release 附件。
 
+Contributing — 本地设置 pre-commit
+----------------------------------
+
+为了保持代码风格一致并避免样式回归，项目使用 `pre-commit` 钩子运行 `black`, `isort`, 和 `flake8`。建议每位贡献者在本地启用：
+
+1. 安装 `pre-commit`（在虚拟环境中执行）：
+
+```powershell
+pip install pre-commit
+```
+
+2. 在项目根启用钩子（只需一次）：
+
+```powershell
+pre-commit install
+```
+
+3. 在提交前或手动运行所有钩子：
+
+```powershell
+pre-commit run --all-files
+```
+
+CI（GitHub Actions）也会运行 `pre-commit` 以阻止不合格的提交被合并。若你希望 CI 自动修复样式，请在 PR 描述中说明并由维护者决定是否合并自动修复的提交。
+
+如果你遇到 `flake8` 报错，先运行 `pre-commit run --all-files`，大多数格式问题会被 `black` 或 `isort` 自动修复；剩余问题一般是代码质量警告，需要手动修复。
+
 贡献类型说明
 - `software`: 代码、工具、脚本或软件工程相关贡献（例如改进训练脚本、模型定义）。
 - `medical`: 与医学专业相关的贡献（例如影像标注、临床解释、病例讨论）。
