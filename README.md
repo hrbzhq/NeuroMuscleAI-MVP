@@ -147,3 +147,39 @@ streamlit run tools/submit_results.py
 - `other`: 其他类型的贡献。
 
 维护者可以在审核 `submissions/` 时按 `contribution_type` 字段来分类并将结果整理到项目文档或 leaderboard 页面。
+
+---
+
+English (Quick Start & Demo)
+---------------------------
+
+This repository provides a small prototype for muscle atrophy detection using a ResNet-based model and Grad-CAM visualization. Quick steps to run the demo locally:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python train.py --config config.yaml --k_folds 3 --epochs 2
+streamlit run app.py
+```
+
+Notes:
+- The Streamlit app will attempt to load `models/best_model.pth` or `models/model_final.pth` if available.
+- Demo overlay images are stored in `docs/` for README rendering; larger artifacts and model weights should be distributed via Releases or external storage.
+
+日本語（簡易手順とデモ）
+------------------------
+
+本リポジトリは筋萎縮検出のプロトタイプを提供します。ローカルでデモを実行する簡単な手順：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python train.py --config config.yaml --k_folds 3 --epochs 2
+streamlit run app.py
+```
+
+注意点：
+- Streamlit アプリは `models/best_model.pth` または `models/model_final.pth` を優先的に読み込みます（存在する場合）。
+- README 表示用のデモ画像は `docs/` に置いてあります。大きな成果物や学習済みモデルは Release や外部ストレージ経由で配布してください。
