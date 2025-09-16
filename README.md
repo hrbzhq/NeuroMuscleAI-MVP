@@ -36,6 +36,12 @@ MIT License
 ![Fold2 Grad-CAM](logs/fold2_gradcam_e1_s0.jpg)
 ![Fold3 Grad-CAM](logs/fold3_gradcam_e1_s0.jpg)
 
+下面是自动生成的 demo 叠加示例（由 `demo_run.py` 生成并保存为 `logs/demo_overlay.jpg`）。该图展示了当前仓库中 `models/best_model.pth` 在一张合成样本上的 Grad-CAM 叠加结果，用以快速验证推理与可视化流程是否工作：
+
+![Demo Grad-CAM Overlay](logs/demo_overlay.jpg)
+
+说明：如果本地没有 `models/best_model.pth`，脚本会使用随机初始化模型生成叠加图，图像仅用于流程演示。
+
 如何复现短跑（在项目根目录运行）：
 
 ```powershell
