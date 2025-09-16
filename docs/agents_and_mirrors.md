@@ -43,6 +43,6 @@ git remote update
 
 7. 联系我们
 
-- 若要成为代理或镜像提供者，请在仓库创建一个 Issue 或发送邮件到 `email@example.com`（请替换为实际联系邮箱）。
+-- 若要成为代理或镜像提供者，请在仓库创建一个 Issue 或发送邮件到 `hrbzhqhrb@gmail.com`。
 
 感谢你的支持与协作！
