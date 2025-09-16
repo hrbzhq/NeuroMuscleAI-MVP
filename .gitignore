@@ -7,3 +7,8 @@ models/
 # Ignore repository backups and local datasets
 .git_backup_*/
 data/
+
+# Network fallback artifacts (local bundle/patches/scripts)
+tools/network_fallback/repo.bundle
+tools/network_fallback/patches/
+tools/network_fallback/auto_purge_and_push.ps1
