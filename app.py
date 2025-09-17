@@ -47,9 +47,36 @@ def get_model(path="models/best_model.pth", pretrained=False):
 # Load cached model and show status in sidebar
 model, model_status, best_path = get_model()
 st.sidebar.markdown("### 模型信息")
-st.sidebar.info(model_status)
+
+# Show model_status with localized style: success if loaded, error if failed, info otherwise
+status_lower = model_status.lower()
+if "loaded model" in status_lower or "loaded" in status_lower:
+    st.sidebar.success(model_status)
+elif "failed" in status_lower or "error" in status_lower or "exception" in status_lower:
+    st.sidebar.error(model_status)
+else:
+    st.sidebar.info(model_status)
+
 st.sidebar.write(f"Device: {device}")
 st.sidebar.write(f"Model file: {best_path if os.path.exists(best_path) else '（未找到）'}")
+
+# Reload model button (clears cache and reloads)
+if st.sidebar.button("Reload model / 重新加载模型"):
+    try:
+        # Clear cached resource and re-fetch
+        try:
+            get_model.clear()
+        except Exception:
+            # older Streamlit versions may use cache_resource_clear or not expose clear(); try alternative
+            try:
+                del get_model.__wrapped__
+            except Exception:
+                pass
+        model, model_status, best_path = get_model()
+        st.sidebar.success(t(lang, "model_reloaded") if 'model_reloaded' in dir(__import__('i18n')) or True else model_status)
+    except Exception as e:
+        st.sidebar.error(f"Reload failed: {e}")
+
 # 置信度/温度缩放设置
 st.sidebar.markdown("### 预测设置")
 temp = st.sidebar.slider("Temperature (softmax scale)", min_value=0.1, max_value=5.0, value=1.0, step=0.1)
