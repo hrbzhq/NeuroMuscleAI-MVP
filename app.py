@@ -27,20 +27,20 @@ lang = langs[lang_choice]
 
 @st.cache_resource
 def get_model(path="models/best_model.pth", pretrained=False):
-    """Cached model loader. Returns a model already moved to `device`.
-    Using a cached resource prevents Streamlit from reloading model on every rerun.
+    """Cached model loader. Returns (model, status, best_path).
+    status is a short human-friendly string describing load outcome.
     """
     m = build_model(pretrained=pretrained)
     best_path = os.path.join(os.getcwd(), path)
     if os.path.exists(best_path):
         try:
             m.load_state_dict(torch.load(best_path, map_location=device))
-            print("Loaded best model from", best_path)
+            status = f"Loaded model from {best_path}"
         except Exception as e:
-            print("Failed to load best model:", e)
+            status = f"Failed to load model: {e}"
     else:
-        print(t(lang, "no_model"))
-    return m.to(device)
+        status = t(lang, "no_model")
+    return m.to(device), status, best_path
 
 # 侧边栏：模型元数据与快速操作
 st.sidebar.markdown("### 模型信息")
@@ -72,8 +72,10 @@ if st.sidebar.button("快速演示（随机样本）"):
     except Exception as e:
         st.error(f"随机演示失败: {e}")
 
-# 获取缓存的模型实例（已移动到 device）
-model = get_model()
+# 获取缓存的模型实例（已移动到 device），同时显示加载状态
+model, model_status, best_path = get_model()
+st.sidebar.info(model_status)
+st.sidebar.write(f"Model file: {best_path if os.path.exists(best_path) else '（未找到）'}")
 
 st.set_page_config(page_title="NeuroMuscle AI", layout="centered")
 st.title(t(lang, "title"))
