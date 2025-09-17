@@ -16,13 +16,15 @@ import csv
 
 from inference import predict_with_probs, entropy_from_probs
 
+# Set page config before any Streamlit calls
+st.set_page_config(page_title="NeuroMuscle AI", layout="centered")
+
 # 设备
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # 语言选择（默认：中文）
 langs = {"中文": "zh", "English": "en", "日本語": "jp"}
 lang_choice = st.sidebar.selectbox("Language / 言語 / 语言", list(langs.keys()), index=0)
-lang = langs[lang_choice]
 lang = langs[lang_choice]
 
 @st.cache_resource
@@ -42,14 +44,18 @@ def get_model(path="models/best_model.pth", pretrained=False):
         status = t(lang, "no_model")
     return m.to(device), status, best_path
 
-# 侧边栏：模型元数据与快速操作
+# Load cached model and show status in sidebar
+model, model_status, best_path = get_model()
 st.sidebar.markdown("### 模型信息")
+st.sidebar.info(model_status)
 st.sidebar.write(f"Device: {device}")
 st.sidebar.write(f"Model file: {best_path if os.path.exists(best_path) else '（未找到）'}")
 # 置信度/温度缩放设置
 st.sidebar.markdown("### 预测设置")
 temp = st.sidebar.slider("Temperature (softmax scale)", min_value=0.1, max_value=5.0, value=1.0, step=0.1)
 confidence_threshold = st.sidebar.slider("Confidence threshold (人工复核阈值)", min_value=0.5, max_value=0.99, value=0.75, step=0.01)
+
+# Quick random demo (requires cached model)
 if st.sidebar.button("快速演示（随机样本）"):
     # 生成随机合成图像并在主区显示预测与 Grad-CAM
     demo_img = Image.fromarray((np.random.rand(224, 224, 3) * 255).astype("uint8"))
