@@ -30,21 +30,23 @@ try {
     }
 }
 
-# Construct arguments
-$frArgs = @()
+# Construct argument list (build a local list of parameters)
+
+# Build argument list using explicit Add to avoid analyzer confusion
+$filterList = New-Object System.Collections.Generic.List[string]
 foreach ($p in $PathsToRemove) {
-    $frArgs += "--path"
-    $frArgs += $p
-    $frArgs += "--invert-paths"
+    $filterList.Add("--path") | Out-Null
+    $filterList.Add($p) | Out-Null
+    $filterList.Add("--invert-paths") | Out-Null
 }
 
-Write-Host "About to run: git filter-repo $($frArgs -join ' ')"
+Write-Host "About to run: git filter-repo $($filterList -join ' ')"
 Write-Host "Make sure you are running in a mirror clone and you have a backup."
 
 Read-Host -Prompt "Press Enter to continue (or Ctrl+C to abort)"
 
 # Run filter-repo
-git filter-repo @frArgs
+git filter-repo @filterList
 if ($LASTEXITCODE -ne 0) {
     Write-Error "git filter-repo failed"
     exit $LASTEXITCODE

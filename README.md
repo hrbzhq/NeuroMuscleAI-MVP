@@ -110,6 +110,18 @@ pre-commit run --all-files
 
 ---
 
+## Maintenance / 运维
+
+维护相关指南、备份与历史清理步骤已整理在 `docs/maintenance_guide.md`。请在执行任何历史重写或强制推送前仔细阅读该文档并备份仓库：
+
+```powershell
+# 例：查看维护指南
+notepad docs\maintenance_guide.md
+```
+
+该文档包含建议的 GitHub 通知文案、备份与回滚步骤，以及如何使用 `tools/maintenance/` 中的脚本进行 dry-run 与实际执行。
+
+
 ## License
 
 This project is licensed under the Apache-2.0 License - see the `LICENSE` file for details.
